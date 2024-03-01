@@ -1,0 +1,60 @@
+# 332 CA Andrada-Ioana Cojocaru
+Tema 1 ASC
+
+In implementare m-am folosit de 3 structuri de date:
+->self.products_left_per_producer pentru a retine
+numar de locuri libere pentru a crea produse pentru
+fiecare producer
+->self.products_every_producer pentru a retine produsele
+create de fiecare producator - cheie id_producator, valoare
+vector cu produsele
+->self.carts pentru a retine produsele din fiecare cos
+cheia cart_id primeste o lista de tupluri formate
+din id_ul producatorului (in cazul in care produsul este sters
+sa putem stii in ce lista se intoarce produsul) si produsul
+
+Elemente de sincronizare: 3 lock-uri: pentru adaugarea unui producator,
+al unui cos, dar si in momentul in care adaugam un obiect in cos
+pentru a nu adauga acelasi obiect in mai multe cosuri.
+Sunt folosite in conditii posibile de race condition
+
+Pentru fiecare thread producator l-am facut daemon pentru ca atunci cand
+celelalte threaduri se termina, sa se termine programul.
+Am generat produse atat timp cat am loc, daca nu dau sleep.
+
+Pentru fiecare consumator ii generez un cos de cumparaturi apoi analizez
+tipul de comanda add/remove si cantitatea si pana o acumulez vad daca o pot
+adauga, daca nu dau sleep
+
+UnitTesting
+- am realizat teste pentru fiecare functie si pentru cazurile marginale pe
+care le-am gasit, dar si un test final ce contine toate functiile si simuleaza
+intreaga problematica
+- a fost interesant sa realizez testari proprii si m-a ajutat sa imi dau seama
+unde se gasesc problemele
+
+Logging
+- am folosit logger pentru debug astfel incat am putut sa imi dau seama de la ce
+variabile vin problemele, punand mesaje relevante
+- nu mai folosisem acest tip de debug si a fost foarte util si dragut de aflat
+cum se foloseste
+
+Limitari:
+-> pylint m-a facut sa imi schimb implementarea deoarece aveam prea multe
+variabile in initializare si am realizat ca foloseam lock-uri de care nu aveam
+nevoie
+-> nu se pune accentul pe eficienta si mi-am permis mai multe structuri de date
+decat as fi putut face in mod eficient
+-> initial implementarea continea un switch in consumer ce nu exista pana
+la varianta 3.10 python si a trebuit sa rescriu
+
+Resurse:
+https://docs.python.org/3/library/logging.html
+https://docs.python.org/3/library/logging.handlers.html
+
+Link git:
+https://github.com/andradaCojocaru/1-marketplace
+
+Link drive .git:
+https://drive.google.com/file/d/1ehBwxKw1-nXyx6FfoyyjCtDl9k9rxpE6/view?usp=sharing
+
